@@ -17,8 +17,8 @@ fi
 # Editors
 #
 
-export EDITOR='nano'
-export VISUAL='nano'
+export EDITOR='vim'
+export VISUAL='vim'
 export PAGER='less'
 
 #
@@ -46,6 +46,7 @@ path=(
   /usr/local/{bin,sbin}
   $path
 )
+export PATH=/usr/local/bin:$PATH
 
 #
 # Less
@@ -72,3 +73,39 @@ if [[ ! -d "$TMPDIR" ]]; then
 fi
 
 TMPPREFIX="${TMPDIR%/}/zsh"
+
+# unset autocorrection
+unsetopt correct
+
+# Run Z
+. ~/z.sh
+export PATH="$HOME/.fastlane/bin:$PATH"
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+# Golang
+export GOPATH=$HOME/go
+export GOROOT=/usr/local/opt/go/libexec
+export GOBIN=$GOPATH/bin
+export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$GOROOT/bin
+
+ #Aliases
+alias reload="clear; source ~/.zprofile"
+alias gco='git checkout '
+alias conda="$HOME/anaconda3/bin/conda"
+
+alias native-reset="watchman watch-del-all && rm -rf $TMPDIR/react-* && npm start -- --reset-cache"
+alias native-debugger-reset="rm -rf ~/Library/Application\ Support/React\ Native\ Debugger/"
+alias adb-log="adb logcat *:S ReactNative:V ReactNativeJS:V"
+alias adb-install-release="adb install android/app/build/outputs/apk/release/app-release.apk"
+alias android-reload="adb shell input keyevent 82"
+alias rndebug="open 'rndebugger://set-debugger-loc?host=localhost'"
+
+
+
+# Setting PATH for Python 3.4
+# The orginal version is saved in .zprofile.pysave
+PATH="/Library/Frameworks/Python.framework/Versions/3.4/bin:${PATH}"
+export PATH
